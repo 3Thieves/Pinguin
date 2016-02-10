@@ -1,0 +1,54 @@
+<%= form_for(@location) do |f| %>
+  <% if @location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
+
+      <ul>
+      <% @location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_field :address , class: "form-control"%>
+  </div>
+  <div class="field form-group">
+    <%= f.label :phone_number%><br>
+    <%= f.text_field :phone_number, class: "form-control" %>
+  </div>
+   <div class="field form-group">
+    <%= f.label :notes%><br>
+    <%= f.text_area :notes, class: "form-control" %>
+   </div>
+<% if @admin %>
+  <div class="field form-group">
+    <%= f.label :link %><br>
+    <%= f.text_field :link, class: "form-control" %>
+  </div>
+  <div class="field form_group">
+    <%= f.label :verified, class:"inline" %>
+    <%= f.check_box :verified, class:"inline" %>
+  </div>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#days"  aria-expanded="false" aria-controls="days">
+  Hours
+  </button>
+<div class="collapse" id="days">
+<% Date::DAYNAMES.each do |name| %>
+   <div class="field form_group">
+     <%= label_tag name %><br>
+      <%= text_field_tag "hours[#{name}]" , @location.hours[name], class: "form-control" %> 
+   </div>
+<% end %>
+</div>
+<% end %>
+  <div class="actions">
+    <%= f.submit class: "btn btn-default" %>
+  </div>
+<% end %>

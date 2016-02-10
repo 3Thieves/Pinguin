@@ -1,0 +1,10 @@
+
+<%= form_tag("/locations", method: "get") do %>
+<div class="input-group">
+  <%= password_field_tag :pass,  nil, placeholder: 'Super Secret Login', class:"form-control"%> <br>
+  <span class="input-group-btn">
+    <%= submit_tag "Secretly Log In", class: "btn btn-default" %>
+  </span>
+</div>
+<% end %>
+

@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<% require 'uri' %>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+  <%= @location.name %>
+  <br>
+  <%= @location.address %>
+  <br>
+</h4>
+<% unless  @location.phone_number.nil? || @location.phone_number == '' %>
+  Phone Number: <%= @location.phone_number %><br>
+<% end %>
+  <a href="<%= @location.link%>" target="_blank">
+  Website
+  </a>
+  <br>
+  <% Date::DAYNAMES.each do |key| %>
+      <% if @location.hours[key] %>
+        <%= key %>
+        <%=@location.hours[key] %> <br>
+      <% end %>
+  <% end %>
+Notes: <%= @location.notes %>
+</div>
+<div class="panel-body embed-responsive embed-responsive-16by9">
+<iframe
+  class="embed-responsive-item"
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAZkSzCWyd6DAuDMNNOTefmoxENEEdR1nI
+    &q=<%=URI.escape(@location.address)%>" allowfullscreen>
+</iframe>
+</div>
+</div>
+<%= link_to 'Edit', edit_location_path(@location), class: "btn btn-default"%> |
+<%= link_to 'Back', locations_path, class: "btn btn-default"%>
