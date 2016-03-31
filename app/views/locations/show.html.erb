@@ -2,28 +2,38 @@
 <% require 'uri' %>
 <div class="panel panel-default">
 <div class="panel-heading">
-<h4 class="panel-title">
+<h3 class="panel-title">
   <%= @location.name %>
-  <br>
-  <%= @location.address %>
-  <br>
 </h4>
+</div>
+<div class="panel-body">
+<blockquote>
+  <%= @location.address %>
+<br>
 <% unless  @location.phone_number.nil? || @location.phone_number == '' %>
-  Phone Number: <%= @location.phone_number %><br>
+  <%= @location.phone_number %><br>
 <% end %>
   <a href="<%= @location.link%>" target="_blank">
   Website
   </a>
-  <br>
+</blockquote>
+<ul class="list-group">
   <% Date::DAYNAMES.each do |key| %>
       <% if @location.hours[key] %>
-        <%= key %>
+      <li class="list-group-item">
+        <strong><%= key %></strong>
         <%=@location.hours[key] %> <br>
+	</li>
       <% end %>
   <% end %>
-Notes: <%= @location.notes %>
+</ul>
+<% if @location.notes && @location.notes !=  "" %>
+<div class="well">
+<%= @location.notes %>
 </div>
-<div class="panel-body embed-responsive embed-responsive-16by9">
+<%end%>
+</div>
+<div class="panel-footer embed-responsive embed-responsive-16by9">
 <iframe
   class="embed-responsive-item"
   width="600"
@@ -34,5 +44,4 @@ Notes: <%= @location.notes %>
 </iframe>
 </div>
 </div>
-<%= link_to 'Edit', edit_location_path(@location), class: "btn btn-default"%> |
 <%= link_to 'Back', locations_path, class: "btn btn-default"%>

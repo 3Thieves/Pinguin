@@ -1,19 +1,19 @@
 require 'date'
 class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :edit, :update, :destroy]
-  before_action :check_admin, only: [:index, :new, :edit, :destroy]
+  before_action :check_admin, only: [:index, :new, :edit, :destroy, :update, :create]
   # GET /locations
   # GET /locations.json
   def index
-    if params[:spot]
-	@lat_lng = Geocoder.search(params[:spot]).first.coordinates
+    if params[:spot] && !Geocoder.search(params[:spot]).first.nil?
+	@lat_lng =  Geocoder.search(params[:spot]).first.coordinates
     elsif cookies[:lat_lng]
         @lat_lng = cookies[:lat_lng].split("|")
     end
     if @admin
        @locations = [Location.where(verified: false).order(:name), Location.where(verified: true).order(:name)].flatten
     elsif @lat_lng
-        @locations = Location.near(@lat_lng, 30)
+        @locations = Location.near(@lat_lng, 5)
     else 
         @locations = Location.all
     end
@@ -39,6 +39,9 @@ class LocationsController < ApplicationController
   # POST /locations.json
   def create
     @location = Location.new(location_params)
+    unless @location.verified && @admin
+	@location.verified = false;
+    end
     @location.hours = params[:hours]
     respond_to do |format|
       if @location.save
@@ -54,6 +57,7 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1
   # PATCH/PUT /locations/1.json
   def update
+    return unless @admin
     @location.hours = params[:hours]
     respond_to do |format|
       if @location.update(location_params)
