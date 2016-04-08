@@ -7,8 +7,8 @@
 </script>
 <% end %>
 
-<h1>Listing Locations</h1>
 <%= image_tag "image.png", class: 'img-responsive' %>
+<p class="pull-right"><%= link_to 'Suggest A Location', new_location_path, class: "btn btn-default" %></p>
 <%= render 'spot' %>
     <% @locations.each do |location| %>
         <div class="panel panel-default">
@@ -38,4 +38,3 @@
           </div>
        <% end %>
 <p> Powered By Google </p>
-<p><%= link_to 'New Location', new_location_path, class: "btn btn-default" %></p>
