@@ -8,8 +8,10 @@
 <% end %>
 
 <%= image_tag "image.png", class: 'img-responsive' %>
+<p>
 <p class="pull-right"><%= link_to 'Suggest A Location', new_location_path, class: "btn btn-default" %></p>
 <%= render 'spot' %>
+</p>
     <% @locations.each do |location| %>
         <div class="panel panel-default">
            <div class="panel-heading clearfix">
